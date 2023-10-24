@@ -29,7 +29,6 @@ import {
 // @ts-ignore
 import { v4 as uuidv4 } from "uuid"; // eslint-disable-line import/no-unresolved
 
-// import { useAccount } from "wagmi";
 import { PublicationMainFocus, Query } from "@/graphql/generated/graphql";
 import { APP_NAME, APP_URL } from "@/lib/constants";
 import { useCreatePublication, useDefaultProfile } from "@/lib/lens";
@@ -61,6 +60,7 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
       await refetch();
       console.log("create post: post created");
       setPopupOpened(false);
+      clearForm();
     },
   });
   const ref = useRef() as MutableRefObject<HTMLInputElement>;
@@ -119,11 +119,10 @@ export function CreatePost({ setPopupOpened, refetch }: CreatePostProps) {
     //   }
     //   clearForm();
     // } else {
-    createPost({
+    await createPost({
       ...metadata,
       mainContentFocus: PublicationMainFocus.TextOnly,
     });
-    clearForm();
     // }
   };
 
